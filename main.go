@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/talha-yazar/Go-Fiber-CRM-Basic/database"
 	"github.com/talha-yazar/Go-Fiber-CRM-Basic/lead"
 )
@@ -22,7 +23,7 @@ func initDatabase() {
 	database.DBConn, err = gorm.Open("sqlite3", "leads.db")
 
 	if err != nil {
-		panic("Failed to connect database")
+		panic("Failed to connect database" + err.Error())
 	}
 
 	fmt.Println("Connection opened to database")
