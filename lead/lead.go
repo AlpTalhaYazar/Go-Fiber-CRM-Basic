@@ -20,3 +20,17 @@ func GetLeads(c *fiber.Ctx) {
 	db.Find(&leads)
 	c.JSON(leads)
 }
+
+func GetLead(c *fiber.Ctx) {
+	id := c.Params("id")
+	db := database.DBConn
+	var lead Lead
+	db.Find(&lead, id)
+
+	if lead.Name == "" {
+		c.Status(500).Send("No Lead Found with ID")
+		return
+	}
+
+	c.JSON(lead)
+}
