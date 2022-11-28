@@ -70,3 +70,22 @@ func UpdateLead(c *fiber.Ctx) {
 	db.Save(&lead)
 	c.JSON(lead)
 }
+
+func DeleteLead(c *fiber.Ctx) {
+	id := c.Params("id")
+
+	db := database.DBConn
+
+	var lead Lead
+
+	db.First(&lead, id)
+
+	if lead.Name == "" {
+		c.Status(500).Send("No Lead Found with ID")
+		return
+	}
+
+	db.Delete(&lead)
+
+	c.Send("Lead Successfully Deleted")
+}
